@@ -9,7 +9,6 @@ import com.example.realworld.domain.user.service.RiderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +24,7 @@ public class ShopController {
     private final ShopService shopService;
     private final RiderService riderService;
 
-    @GetMapping("/{shopId}/nearest-riders")
+    @PostMapping("/{shopId}/nearest-riders")
     public void sendMessageToNearestRiders
             (@PathVariable(name = "shopId") Long shopId, @Valid @RequestBody NotificationRequestDto notificationRequestDto) {
         riderService.demoMethod(shopId, notificationRequestDto);
