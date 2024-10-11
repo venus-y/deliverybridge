@@ -17,7 +17,7 @@ public class OwnerService {
     private final ShopRepository shopRepository;
 
 
-    public Long insert(MenuRequestDto menuRequestDto) {
+    public void insert(MenuRequestDto menuRequestDto) {
 
         Long shopId = menuRequestDto.getShopId();
 
@@ -34,6 +34,5 @@ public class OwnerService {
 
         menuRepository.save(menu);
 
-        return menu.getId();
     }
 }

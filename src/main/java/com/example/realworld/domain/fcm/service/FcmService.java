@@ -60,8 +60,7 @@ public class FcmService {
         FirebaseApp.initializeApp(options);
     }
 
-    public void sendMessageByToken(String title, String body, String username) {
-        String fcmToken = getFcmToken(username);
+    public void sendMessageByToken(String title, String body, String fcmToken) {
 
         try {
             FirebaseMessaging.getInstance().send(Message.builder()
@@ -103,10 +102,10 @@ public class FcmService {
 //
 //    }
 
-    public String getFcmToken(String userName) {
-        String key = userName;
+    public String getFcmToken(Long userId) {
 
-        Set<String> members = redisTemplate.opsForSet().members(key);
+
+        Set<String> members = redisTemplate.opsForSet().members(userId.toString());
 
 
         if (!members.isEmpty()) {

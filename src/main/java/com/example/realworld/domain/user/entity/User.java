@@ -2,6 +2,7 @@ package com.example.realworld.domain.user.entity;
 
 import com.example.realworld.common.Address;
 import com.example.realworld.common.BaseTimeEntity;
+import com.example.realworld.domain.delivery.entity.Delivery;
 import com.example.realworld.domain.order.entity.Order;
 import com.example.realworld.domain.payment.entity.Payment;
 import com.example.realworld.domain.shop.entity.Shop;
@@ -50,6 +51,9 @@ public class User extends BaseTimeEntity {
     private List<Shop> shopList = new ArrayList<>();
     @OneToMany(mappedBy = "user")
     private List<Payment> payments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "rider")
+    private List<Delivery> deliveries = new ArrayList<>();
 
     public User(Long id) {
         this.id = id;
