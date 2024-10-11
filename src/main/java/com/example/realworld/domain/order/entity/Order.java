@@ -1,6 +1,7 @@
 package com.example.realworld.domain.order.entity;
 
 import com.example.realworld.common.BaseTimeEntity;
+import com.example.realworld.domain.delivery.entity.Delivery;
 import com.example.realworld.domain.shop.entity.Shop;
 import com.example.realworld.domain.user.entity.User;
 import jakarta.persistence.Column;
@@ -14,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -31,22 +33,21 @@ import java.util.List;
 @Builder
 @Table(name = "orders")
 public class Order extends BaseTimeEntity {
+
+    @OneToOne(mappedBy = "order")
+    Delivery delivery;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-
     @ManyToOne
     @JoinColumn(name = "shop_id")
     private Shop shop;
-
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     private List<OrderMenu> orderMenuList = new ArrayList<>();
 

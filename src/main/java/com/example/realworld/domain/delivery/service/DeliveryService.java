@@ -7,7 +7,7 @@ import com.example.realworld.domain.delivery.exception.ConcurrentAccessException
 import com.example.realworld.domain.delivery.repository.DeliveryRepository;
 import com.example.realworld.domain.order.entity.Order;
 import com.example.realworld.domain.order.entity.OrderStatus;
-import com.example.realworld.domain.order.exception.OrderAlreadyAssigedException;
+import com.example.realworld.domain.order.exception.OrderAlreadyAssignedException;
 import com.example.realworld.domain.order.repository.OrderRepository;
 import com.example.realworld.domain.user.dto.RiderLocationResponseDto;
 import com.example.realworld.domain.user.entity.User;
@@ -55,7 +55,7 @@ public class DeliveryService {
 
                 if (order.getOrderStatus()
                         .equals(OrderStatus.ASSIGNED)) {
-                    throw new OrderAlreadyAssigedException("이미 다른 라이더에게 배정된 주문입니다.");
+                    throw new OrderAlreadyAssignedException("이미 다른 라이더에게 배정된 주문입니다.");
                 }
 
                 Delivery delivery = Delivery.builder()
@@ -78,7 +78,10 @@ public class DeliveryService {
                         .build();
             } finally {
                 // 락 해제
-                redisTemplate.delete(lockKey);
+                String lockValue = redisTemplate.opsForValue().get(lockKey);
+                if (riderId.toString().equals(lockValue)) {
+                    redisTemplate.delete(lockKey);
+                }
             }
         } else {
             throw new ConcurrentAccessException("다른 라이더가 이미 이 주문을 처리 중입니다.");
@@ -88,7 +91,7 @@ public class DeliveryService {
     public RiderLocationResponseDto getRiderLocation(Long riderId) {
         String address = redisTemplate.opsForValue().get("rider:" + riderId + ":address");
         if (address == null) {
-            throw new NotFoundException("유효하지 않은 접근입니다");
+            throw new NotFoundException("라이더의 위치를 찾을 수 없습니다");
         }
         return toRiderLocationResponseDto(address);
     }

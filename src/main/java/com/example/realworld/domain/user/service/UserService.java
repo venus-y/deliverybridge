@@ -24,7 +24,7 @@ public class UserService {
     private final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
-    public Long insert(@Valid UserRegisterDto userRegisterDto) {
+    public void insert(@Valid UserRegisterDto userRegisterDto) {
 
         if (userRepository.existsByUsername(userRegisterDto.getUsername())) {
             throw new AlreadyExistsException(userRegisterDto.getUsername() + "은 이미 존재하는 회원입니다.");
@@ -37,7 +37,6 @@ public class UserService {
                 saveFcmToken(user.getId(), userRegisterDto.getFcmToken());
             }
 
-            return user.getId();
         }
     }
 

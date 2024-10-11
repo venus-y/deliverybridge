@@ -48,7 +48,7 @@ public class OrderService {
     private final ShopRepository shopRepository;
     private final FcmService fcmService;
 
-    public Long processOrder(OrderRequestDto orderRequestDto, String username) {
+    public void processOrder(OrderRequestDto orderRequestDto, String username) {
 
         User findUser = userRepository
                 .findByUsername(username)
@@ -108,17 +108,18 @@ public class OrderService {
         orderMenuRepository.saveAll(orderMenuList);
 
 
-        String ownerName = shop
+        Long ownerId = shop
                 .getUser()
-                .getUsername();
+                .getId();
 
-        fcmService.sendMessageByToken("테스트제목", "테스트바디", ownerName);
+        String fcmToken = fcmService.getFcmToken(ownerId);
+
+        fcmService.sendMessageByToken("테스트제목", "테스트바디", fcmToken);
 
 
         // 결제 Entity
 
 
-        return savedOrder.getId();
     }
 
     public void approveOrder(Long orderId, Long userId) {
@@ -127,7 +128,8 @@ public class OrderService {
         if (user.getId().equals(userId)) {
             order.updateOrderStatus(OrderStatus.APPROVED);
             // 주문요청한 회원에게 푸시 메시지 전송
-            fcmService.sendMessageByToken("테스트제목", "테스트바디", order.getUser().getUsername());
+            String fcmToken = fcmService.getFcmToken(order.getUser().getId());
+            fcmService.sendMessageByToken("테스트제목", "테스트바디", fcmToken);
 //            fcmService.sendMessageToRiders();<<<
         } else {
             throw new ForbiddenOrderApprovalActionException("주문을 승인할 권한이 없습니다");

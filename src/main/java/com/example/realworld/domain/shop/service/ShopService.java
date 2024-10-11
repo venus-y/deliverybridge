@@ -25,7 +25,7 @@ public class ShopService {
     private final RedisTemplate<String, String> redisTemplate;
     private final ShopRepository shopRepository;
 
-    public Long register(ShopRegisterDto registerDto, User user) {
+    public void register(ShopRegisterDto registerDto, User user) {
         Shop shop = Shop.builder()
                 .name(registerDto.getName())
                 .user(user)
@@ -42,7 +42,6 @@ public class ShopService {
         // Reids에 상점의 위치정보를 저장
         saveShopLocation(shop);
 
-        return shop.getId();
     }
 
     private void saveShopLocation(Shop shop) {
