@@ -5,7 +5,7 @@
 
 
 ## 프로젝트 링크
-API 스웨거 링크: ec2-43-201-252-254.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/index.html
+API 스웨거 링크 : http://ec2-43-201-252-254.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/index.html#/
 
 <br>
 
