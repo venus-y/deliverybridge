@@ -30,6 +30,13 @@ DeliveryBridge는 배달 중계 API를 제공하는 프로젝트입니다. 주�
 ## 🗓️ 개발 기간
 2024-09~진행중
 
+## 라이더 위치 조회 Flow
+<img width="571" alt="라이더 위치 조회" src="https://github.com/user-attachments/assets/5bb5a50d-a9d2-4620-9053-826ef5bf6ec3" />
+
+## 라이더 주문 할당 요청 Flow
+<img width="773" alt="주문 할당 요청" src="https://github.com/user-attachments/assets/b5f3186d-d613-4d2a-ab75-713813525dca" />
+
+
 ## 🛠 기술적 issue 해결 과정
 
 
