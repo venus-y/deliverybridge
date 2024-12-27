@@ -21,7 +21,7 @@ public class MenuController {
     private final MenuService menuService;
 
     @GetMapping("/")
-    public ResponseEntity<Object> getMenus(MenuSearchCond cond, Pageable pageable) {
+    public ResponseEntity<Page<MenuResponseDto>> getMenus(MenuSearchCond cond, Pageable pageable) {
         Page<MenuResponseDto> menus = menuService.getMenus(cond, pageable);
 
         return ResponseEntity.ok(menus);

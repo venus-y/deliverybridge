@@ -61,7 +61,6 @@ public class SecurityConfig {
         //경로별 인가 작업
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/admin/test").hasRole("ADMIN")
                         .requestMatchers(PERMIT_ALL_OPERATIONS).permitAll()
                         .requestMatchers(ADMIN_OWNER_OPERATIONS).hasAnyRole("OWNER", "ADMIN")
                         .anyRequest().authenticated());

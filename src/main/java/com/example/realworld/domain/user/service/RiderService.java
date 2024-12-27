@@ -97,16 +97,7 @@ public class RiderService {
 
         List<GeoResult<RedisGeoCommands.GeoLocation<String>>> geoResults = findNearestRiders(shopId, notificationRequestDto.getRadius());
 
-//        return geoResults.stream().map(geoResult -> {
-//            long riderId = Long.parseLong(geoResult.getContent().getName());
-//            double distance = geoResult.getDistance().getValue();
-//            // 라이더 추가 정보 조회 (예: 데이터베이스에서)
-//            return RiderInfoResponseDto.builder()
-//                    .id(riderId)
-//                    .distance(distance)
-//                    .build();
-//        }).collect(Collectors.toList());
-
+        
         List<String> riderIds =
                 geoResults
                         .stream()

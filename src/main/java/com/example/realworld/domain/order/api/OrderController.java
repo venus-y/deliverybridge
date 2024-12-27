@@ -1,6 +1,5 @@
 package com.example.realworld.domain.order.api;
 
-import com.example.realworld.common.aop.CheckBindingErrors;
 import com.example.realworld.domain.order.dto.OrderRequestDto;
 import com.example.realworld.domain.order.dto.OrderResponseDto;
 import com.example.realworld.domain.order.service.OrderService;
@@ -11,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,10 +29,8 @@ public class OrderController {
 
 
     @PostMapping("/")
-    @CheckBindingErrors
-    public ResponseEntity<Object> register(@Valid @RequestBody OrderRequestDto orderRequestDto, @CurrentUser User user, BindingResult bindingResult) {
-        Long orderId = orderService.processOrder(orderRequestDto, user.getUsername());
-        return new ResponseEntity<>(orderId, HttpStatus.OK);
+    public void register(@Valid @RequestBody OrderRequestDto orderRequestDto, @CurrentUser User user) {
+        orderService.processOrder(orderRequestDto, user.getUsername());
     }
 
     @PutMapping("/{orderId}/approval")
@@ -45,7 +40,7 @@ public class OrderController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<Object> getOrderList(Pageable pageable) {
+    public ResponseEntity<Page<OrderResponseDto>> getOrderList(Pageable pageable) {
         Page<OrderResponseDto> orderResponseDtoList = orderService.getOrderList(pageable);
         return ResponseEntity.ok(orderResponseDtoList);
     }
