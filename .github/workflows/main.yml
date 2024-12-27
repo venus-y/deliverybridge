@@ -64,12 +64,13 @@ jobs:
     # Deploy
     - name: Deploy
       env:
-      	AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      	AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
         aws deploy create-deployment \
-        --application-name coinTalk[deliverybridge] \
-        --deployment-group-name coinTalk-group[deliverybridge-group] \
+        --application-name deliverybridge \
+        --deployment-group-name deliverybridge-group \
         --file-exists-behavior OVERWRITE \
-        # --s3-location bucket=cointalk-deploy[S3버킷이름],bundleType=zip,key=[압축파일 이름].zip[S3버킷 속 압축파일] \ 
+        # --s3-location bucket=${{ env.S3_BUCKET_NAME }},bundleType=zip,key=deploy.zip \
         --region ap-northeast-2
+
