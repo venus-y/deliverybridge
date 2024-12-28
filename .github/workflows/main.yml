@@ -70,5 +70,5 @@ jobs:
           --application-name deliverybridge \
           --deployment-group-name deliverybridge-group \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=deliverybridge,bundleType=zip,key=deliverybridge/deliverybridge.zip \
+          --s3-location bucket=deliverybridge,bundleType=zip,key=deliverybridge.zip \
           --region ap-northeast-2
