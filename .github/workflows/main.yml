@@ -36,12 +36,12 @@ jobs:
     - name: Set YML
       run: |
         mkdir -p src/main/resources
-        echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml
+        echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application.yml
         
     - name: Set FIREBASE
       run: |
         mkdir -p src/main/resources/key
-        echo "${{ secrets.FIREBASE_INFO_JSON }}" | base64 --decode > src/main/resources/key/realworld-64385-firebase-adminsdk-74i2n-46cbc6df19.json
+        echo "${{ secrets.FIREBASE_INFO_JSON }}" > src/main/resources/key/realworld-64385-firebase-adminsdk-74i2n-46cbc6df19.json
 
     # Jar 파일 복사
     - name: Copy Jar
