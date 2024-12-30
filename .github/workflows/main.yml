@@ -11,7 +11,6 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -33,7 +32,17 @@ jobs:
     # 디렉토리 생성
     - name: Make Directory
       run: mkdir -p deploy
+
+    - name: Set YML
+      run: |
+        mkdir -p src/main/resources
+        echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application.yml
         
+    - name: Set FIREBASE
+      run: |
+        mkdir -p src/main/resources/key
+        echo "${{ secrets.FIREBASE_INFO_JSON }}" > src/main/resources/key/realworld-64385-firebase-adminsdk-74i2n-46cbc6df19.json
+
     # Jar 파일 복사
     - name: Copy Jar
       run: cp ./build/libs/*.jar ./deploy
@@ -62,9 +71,6 @@ jobs:
 
     # Deploy
     - name: Deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
         aws deploy create-deployment \
           --application-name deliverybridge \
@@ -72,3 +78,6 @@ jobs:
           --file-exists-behavior OVERWRITE \
           --s3-location bucket=deliverybridge,bundleType=zip,key=deliverybridge.zip \
           --region ap-northeast-2
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
