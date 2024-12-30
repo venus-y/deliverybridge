@@ -65,7 +65,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        String[] excludePath = {"/login", "/users/"};
+        String[] excludePath = {"/login", "/users/", "/menus/", "/"};
         String path = request.getRequestURI();
         return Arrays.stream(excludePath).anyMatch(path::equals);
     }

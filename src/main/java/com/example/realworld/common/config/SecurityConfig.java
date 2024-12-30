@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private static final String[] PERMIT_ALL_OPERATIONS = {"/login", "/", "/users/", "/swagger-ui/**", "/v3/api-docs/**", "/error"};
+    private static final String[] PERMIT_ALL_OPERATIONS = {"/login", "/", "/users", "/swagger-ui/**", "/v3/api-docs/**", "/error", "/menus/,", "/"};
     private static final String[] ADMIN_OWNER_OPERATIONS = {"/owners/**", "/shops/**", "/orders/{orderId}/approval"};
     private final AuthenticationConfiguration configuration;
     private final JWTUtil jwtUtil;
