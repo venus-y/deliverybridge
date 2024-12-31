@@ -25,7 +25,19 @@ jobs:
         
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    
+
+    # YML 설정
+    - name: Set YML
+      run: |
+        mkdir -p src/main/resources
+        echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml
+        
+    - name: Set FIREBASE
+      run: |
+        mkdir -p src/main/resources/key
+        echo "${{ secrets.FIREBASE_INFO_JSON }}" | base64 --decode > src/main/resources/key/realworld-64385-firebase-adminsdk-74i2n-46cbc6df19.json
+
+    # Gradle 빌드
     - name: Build with Gradle
       run: ./gradlew clean build -x test # 테스트 Skip
 
@@ -33,16 +45,6 @@ jobs:
     - name: Make Directory
       run: mkdir -p deploy
 
-    - name: Set YML
-      run: |
-        mkdir -p src/main/resources
-          echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml
-        
-    - name: Set FIREBASE
-      run: |
-        mkdir -p src/main/resources/key
-          echo "${{ secrets.FIREBASE_INFO_JSON }}" | base64 --decode > src/main/resources/key/realworld-64385-firebase-adminsdk-74i2n-46cbc6df19.json
-        
     # Jar 파일 복사
     - name: Copy Jar
       run: cp ./build/libs/*.jar ./deploy
